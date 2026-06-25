@@ -8,11 +8,11 @@ class GetRequester:
     def get_response_body(self):
         """
         Send an HTTP GET request to the stored URL
-        and return the raw response body as text.
+        and return the raw response body as bytes.
         """
         response = requests.get(self.url)
-        response.raise_for_status()  # raises error if request fails
-        return response.text
+        response.raise_for_status()
+        return response.content   # <-- return bytes, not text
 
     def load_json(self):
         """
@@ -20,4 +20,4 @@ class GetRequester:
         into Python data structures using json.loads.
         """
         response_body = self.get_response_body()
-        return json.loads(response_body)
+        return json.loads(response_body.decode("utf-8"))
